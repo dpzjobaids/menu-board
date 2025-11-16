@@ -1,28 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <link rel="stylesheet" href="style.css">
   <meta charset="UTF-8">
   <title>Bread Sides</title>
+  <link rel="stylesheet" href="style.css">
+
   <style>
     body {
       margin: 0;
       padding: 0;
       background: #111;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
       font-family: Arial, sans-serif;
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
 
+    .scroll-container {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      display: flex;
+      flex-direction: column;
+    }
+
     .image-container {
-      flex: 1;
+      flex: 0 0 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       scroll-snap-align: start;
     }
 
@@ -47,19 +52,50 @@
     }
 
     .back:hover { background: #555; }
-
-    .scroll-container {
-      height: 100vh;
-      overflow-y: scroll;
-      scroll-snap-type: y mandatory;
-    }
   </style>
 </head>
 <body>
+
+  <!-- Back button -->
   <a href="index.html" class="back">← Back</a>
-  <div class="scroll-container">
-    <div class="image-container"><img src="images/bread.jpg" alt="Bread Sides"></div>
-    <div class="image-container"><img src="images/bread2.jpg" alt="Bread Sides"></div>
+
+  <!-- Scroll indicator (uses the styles already in style.css) -->
+  <div class="scroll-indicator" id="scroll-indicator">
+    <div class="scroll-indicator-arrow"></div>
   </div>
+
+  <div class="scroll-container">
+    <div class="image-container">
+      <img src="images/bread.jpg" alt="Bread Sides 1">
+    </div>
+    <div class="image-container">
+      <img src="images/bread2.jpg" alt="Bread Sides 2">
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const indicator = document.getElementById('scroll-indicator');
+      const scroller  = document.querySelector('.scroll-container');
+
+      if (!indicator || !scroller) return;
+
+      function updateScrollIndicator() {
+        const canScroll = scroller.scrollHeight - scroller.clientHeight > 8;
+        const atBottom  = (scroller.scrollHeight - scroller.clientHeight - scroller.scrollTop) < 8;
+
+        if (canScroll && !atBottom) {
+          indicator.classList.add('visible');
+        } else {
+          indicator.classList.remove('visible');
+        }
+      }
+
+      scroller.addEventListener('scroll', updateScrollIndicator, { passive: true });
+      window.addEventListener('resize', updateScrollIndicator);
+      updateScrollIndicator();
+    })();
+  </script>
+
 </body>
 </html>

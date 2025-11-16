@@ -15,26 +15,22 @@
   </div>
 
   <main class="app-center">
-    <div class="menu-grid">
+    <div class="menu-grid" id="specialty-grid">
 
       <a href="philly.html" class="menu-card card-blue">
         <span class="label">Philly Steak Pizza</span>
-      </a>
-
-      <a href="buffalochicken.html" class="menu-card card-red">
-        <span class="label">Buffalo Chicken</span>
       </a>
 
       <a href="honoluluhawaiian.html" class="menu-card card-blue">
         <span class="label">Honolulu Hawaiian</span>
       </a>
 
-      <a href="pacificveggie.html" class="menu-card card-red">
-        <span class="label">Pacific Veggie</span>
+      <a href="spicycbr.html" class="menu-card card-blue">
+        <span class="label">Spicy Chicken Bacon Ranch</span>
       </a>
 
-      <a href="calichickenbaconranch.html" class="menu-card card-blue">
-        <span class="label">Cali Chicken Bacon Ranch</span>
+      <a href="pacificveggie.html" class="menu-card card-red">
+        <span class="label">Pacific Veggie</span>
       </a>
 
       <a href="memphisbbqchicken.html" class="menu-card card-red">
@@ -62,11 +58,27 @@
       </a>
 
       <a href="deluxe.html" class="menu-card card-red">
-        <span class="label">Deluxe</span>
+        <span class="label">The People's Pizza - Deluxe</span>
       </a>
 
     </div>
   </main>
+
+  <!-- ===============================
+       AUTOMATIC ALPHABETICAL SORTING
+       =============================== -->
+  <script>
+    const grid = document.getElementById("specialty-grid");
+    const cards = Array.from(grid.children);
+
+    cards.sort((a, b) => {
+      const textA = a.querySelector(".label").textContent.trim().toLowerCase();
+      const textB = b.querySelector(".label").textContent.trim().toLowerCase();
+      return textA.localeCompare(textB);
+    });
+
+    cards.forEach(card => grid.appendChild(card));
+  </script>
 
 </body>
 </html>

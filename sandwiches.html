@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <link rel="stylesheet" href="style.css">
   <meta charset="UTF-8">
   <title>Sandwiches</title>
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
       margin: 0;
@@ -72,21 +72,56 @@
   </style>
 </head>
 <body>
+
   <a href="index.html" class="back">← Back</a>
+
+  <!-- Scroll indicator (arrow uses CSS from style.css) -->
+  <div class="scroll-indicator" id="scroll-indicator">
+    <div class="scroll-indicator-arrow"></div>
+  </div>
+
   <div class="scroll-container">
     <div class="full-image"><img src="images/sw6.jpg" alt="Sandwich Special"></div>
+
     <div class="side-by-side-container">
-      <img src="images/sw.jpg" alt="Sandwich 1">
+      <img src="images/sw.jpg"  alt="Sandwich 1">
       <img src="images/sw1.jpg" alt="Sandwich 2">
     </div>
+
     <div class="side-by-side-container">
       <img src="images/sw2.jpg" alt="Sandwich 3">
       <img src="images/sw3.jpg" alt="Sandwich 4">
     </div>
+
     <div class="side-by-side-container">
       <img src="images/sw4.jpg" alt="Sandwich 5">
       <img src="images/sw5.jpg" alt="Sandwich 6">
     </div>
   </div>
+
+  <script>
+    (function () {
+      const indicator = document.getElementById('scroll-indicator');
+      if (!indicator) return;
+
+      function updateScrollIndicator() {
+        const doc = document.documentElement;
+        const canScroll = doc.scrollHeight > doc.clientHeight + 10;
+        const atBottom =
+          (doc.scrollHeight - doc.clientHeight - doc.scrollTop) < 10;
+
+        if (canScroll && !atBottom) {
+          indicator.classList.add('visible');
+        } else {
+          indicator.classList.remove('visible');
+        }
+      }
+
+      window.addEventListener('scroll', updateScrollIndicator, { passive: true });
+      window.addEventListener('resize', updateScrollIndicator);
+      updateScrollIndicator();
+    })();
+  </script>
+
 </body>
 </html>
