@@ -3,18 +3,21 @@
    ==================================== */
 
 :root {
-  --bg: #0a0a0a;
-  --card-bg: #1a1a1a;
-  --card-hover: #242424;
+  --bg: #001e3c;             /* Deep Domino's Blue */
+  --card-bg: #D41E00;        /* Brighter blue cards */
+  --card-hover: #034d99;     /* Hover pop */
   --text-white: #ffffff;
-  --text-muted: #cccccc;
-  --accent-blue: #007bff;
-  --accent-red: #e31837;
+  --text-muted: #e0eaff;
+
+  --accent-blue: #0096ff;    /* Electric blue stripe */
+  --accent-red: #ff0033;     /* Bright Domino’s red */
 
   --radius: 22px;
   --shadow: 0 10px 28px rgba(0,0,0,0.45);
   --font: "Segoe UI", Arial, sans-serif;
 }
+
+
 
 /* RESET */
 * {
