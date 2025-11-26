@@ -46,7 +46,7 @@ body {
   letter-spacing: 1px;
 }
 
-/* LAYOUT */
+/* MAIN LAYOUT */
 .app-center {
   width: 100%;
   display: flex;
@@ -54,6 +54,7 @@ body {
   padding-bottom: 80px; /* extra spacing for scroll indicator if needed */
 }
 
+/* DEFAULT GRID (index and multi-item pages) */
 .menu-grid {
   width: 90%;
   max-width: 1200px;
@@ -174,4 +175,47 @@ body {
     transform: translateY(6px);
     opacity: 0.45;
   }
+}
+
+/* =========================================
+   SPECIAL LAYOUT FOR PAGES WITH TWO CARDS
+   (Pizza menu)
+   ========================================= */
+
+.two-box-grid {
+  max-width: 900px;
+  width: 90%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(260px, 360px));
+  gap: 40px;
+  justify-content: center;   /* center the pair as a block */
+  align-items: stretch;
+  margin-top: 40px;
+}
+
+.two-box-grid .menu-card {
+  padding: 40px 30px;
+  font-size: 2.1rem;
+  min-height: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.index-grid {
+  max-width: 1500px !important;
+  width: 90%;
+  gap: 40px !important;
+
+  /* 3 columns on larger tablets, 2 on small ones */
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)) !important;
+}
+
+/* Make every box perfectly uniform */
+.index-grid .menu-card {
+  padding: 45px 20px !important;
+  font-size: 2.3rem !important;
+  min-height: 200px;        /* ensures consistent height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

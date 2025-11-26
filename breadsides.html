@@ -3,99 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <title>Bread Sides</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
-
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: #111;
-      font-family: Arial, sans-serif;
-      overflow-x: hidden;
-      scroll-behavior: smooth;
-    }
-
-    .scroll-container {
-      height: 100vh;
-      overflow-y: scroll;
-      scroll-snap-type: y mandatory;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .image-container {
-      flex: 0 0 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      scroll-snap-align: start;
-    }
-
-    img {
-      max-width: 100vw;
-      max-height: 100vh;
-      object-fit: contain;
-      border-radius: 15px;
-    }
-
-    .back {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      font-size: 1.8rem;
-      color: white;
-      text-decoration: none;
-      padding: 10px 20px;
-      border-radius: 12px;
-      background: #333;
-      z-index: 10;
-    }
-
-    .back:hover { background: #555; }
-  </style>
 </head>
+
 <body>
 
-  <!-- Back button -->
-  <a href="index.html" class="back">← Back</a>
+  <!-- Back Button -->
+  <a href="index.html" class="ui-back">← Back</a>
 
-  <!-- Scroll indicator (uses the styles already in style.css) -->
-  <div class="scroll-indicator" id="scroll-indicator">
-    <div class="scroll-indicator-arrow"></div>
+  <div class="header-container">
+    <div class="header-title">Bread Sides</div>
   </div>
 
-  <div class="scroll-container">
-    <div class="image-container">
-      <img src="images/bread.jpg" alt="Bread Sides 1">
+  <main class="app-center">
+
+    <!-- OVERRIDE GRID TO LOOK LIKE INDEX -->
+    <div class="menu-grid"
+         style="
+           max-width: 1400px;
+           gap: 40px;
+           grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+         ">
+
+      <a href="cheesybread.html" 
+         class="menu-card card-blue"
+         style="padding:45px 20px; font-size:2.3rem;">
+         Stuffed Cheesy Bread
+      </a>
+
+      <a href="parmbites.html"
+         class="menu-card card-red"
+         style="padding:45px 20px; font-size:2.3rem;">
+         Parmesan Bread Bites
+      </a>
+
     </div>
-    <div class="image-container">
-      <img src="images/bread2.jpg" alt="Bread Sides 2">
-    </div>
-  </div>
-
-  <script>
-    (function () {
-      const indicator = document.getElementById('scroll-indicator');
-      const scroller  = document.querySelector('.scroll-container');
-
-      if (!indicator || !scroller) return;
-
-      function updateScrollIndicator() {
-        const canScroll = scroller.scrollHeight - scroller.clientHeight > 8;
-        const atBottom  = (scroller.scrollHeight - scroller.clientHeight - scroller.scrollTop) < 8;
-
-        if (canScroll && !atBottom) {
-          indicator.classList.add('visible');
-        } else {
-          indicator.classList.remove('visible');
-        }
-      }
-
-      scroller.addEventListener('scroll', updateScrollIndicator, { passive: true });
-      window.addEventListener('resize', updateScrollIndicator);
-      updateScrollIndicator();
-    })();
-  </script>
+  </main>
 
 </body>
 </html>

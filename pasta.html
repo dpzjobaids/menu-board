@@ -5,100 +5,35 @@
   <title>Pasta</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
-
-  <style>
-    /* Keep the original pasta layout + snapping exactly as you liked it */
-
-    body {
-      margin: 0;
-      padding: 0;
-      background: #111;
-      font-family: Arial, sans-serif;
-      overflow-x: hidden;
-      /* let the INNER container scroll, not the page */
-      scroll-behavior: smooth;
-    }
-
-    .scroll-container {
-      display: flex;
-      flex-direction: column;
-      scroll-snap-type: y mandatory;
-      overflow-y: scroll;
-      height: 100vh;
-    }
-
-    .image-container {
-      flex: 0 0 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      scroll-snap-align: start;
-    }
-
-    .image-container img {
-      max-width: 100vw;
-      max-height: 100vh;
-      object-fit: contain;
-      border-radius: 15px;
-    }
-
-    .back {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      font-size: 1.8rem;
-      color: white;
-      text-decoration: none;
-      padding: 10px 20px;
-      border-radius: 12px;
-      background: #333;
-      z-index: 10;
-    }
-
-    .back:hover { background: #555; }
-  </style>
 </head>
+
 <body>
 
-  <a href="index.html" class="back">← Back</a>
+  <!-- Back Button -->
+  <a href="index.html" class="ui-back">← Back</a>
 
-  <!-- 🔽 Scroll indicator (uses CSS from style.css) -->
-  <div class="scroll-indicator" id="scroll-indicator">
-    <div class="scroll-indicator-arrow"></div>
+  <div class="header-container">
+    <div class="header-title">Pasta</div>
   </div>
 
-  <div class="scroll-container" id="pasta-scroll">
-    <div class="image-container"><img src="images/pasta.jpg"  alt="Pasta 1"></div>
-    <div class="image-container"><img src="images/pasta1.jpg" alt="Pasta 2"></div>
-    <div class="image-container"><img src="images/pasta2.jpg" alt="Pasta 3"></div>
-    <div class="image-container"><img src="images/pasta3.jpg" alt="Pasta 4"></div>
-  </div>
+  <main class="app-center">
+    <div class="menu-grid">
 
-  <script>
-    (function () {
-      const indicator = document.getElementById('scroll-indicator');
-      const scroller  = document.getElementById('pasta-scroll');
-      if (!indicator || !scroller) return;
+      <!-- 4 boxes instead of full images -->
+      <a href="pastaalfredo.html" class="menu-card card-blue">
+        Chicken Alfredo
+      </a>
 
-      function updateScrollIndicator() {
-        const canScroll = scroller.scrollHeight > scroller.clientHeight + 5;
-        const atBottom  = (scroller.scrollHeight - scroller.clientHeight - scroller.scrollTop) < 5;
+      <a href="pastamac.html" class="menu-card card-red">
+        5-Cheese Mac & Cheese
+      </a>
 
-        if (canScroll && !atBottom) {
-          indicator.classList.add('visible');
-        } else {
-          indicator.classList.remove('visible');
-        }
-      }
+      <a href="pastamarinara.html" class="menu-card card-blue">
+        Italian Sausage Marinara
+      </a>
 
-      scroller.addEventListener('scroll', updateScrollIndicator, { passive: true });
-      window.addEventListener('resize', updateScrollIndicator);
-      window.addEventListener('load', () => {
-        // wait a tick so images can report correct height
-        setTimeout(updateScrollIndicator, 100);
-      });
-    })();
-  </script>
+    </div>
+  </main>
 
 </body>
 </html>

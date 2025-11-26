@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Toppings Guide</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Local layout tuning only for this page */
+
+    body {
+      background: #111;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    .top-wrapper {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;           /* controls spacing between images */
+      padding-top: 80px;   /* pushes content down a bit */
+      padding-bottom: 40px;
+    }
+
+    .top-wrapper img {
+      max-width: 95vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.55);
+    }
+
+    .back {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 1.8rem;
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.6);
+      z-index: 999;
+    }
+
+    .back:hover {
+      background: rgba(255,255,255,0.15);
+    }
+  </style>
+</head>
+
+<body>
+
+  <a href="pizzas.html" class="back">← Back</a>
+
+  <div class="top-wrapper">
+
+    <!-- Top image -->
+    <img src="images/byo.jpg" alt="Toppings Guide Step A">
+
+    <!-- Bottom image -->
+    <img src="images/byo4.jpg" alt="Toppings Guide Step B">
+
+    <img src="images/byo2.jpg" alt="Toppings Guide Step B">
+
+  </div>
+
+</body>
+</html>
