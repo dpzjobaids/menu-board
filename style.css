@@ -17,8 +17,6 @@
   --font: "Segoe UI", Arial, sans-serif;
 }
 
-
-
 /* RESET */
 * {
   box-sizing: border-box;
@@ -33,7 +31,15 @@ body {
   background: var(--bg);
   color: var(--text-white);
   font-family: var(--font);
+
+  /* allow vertical scroll where needed, but never sideways */
+  overflow-x: hidden;
   overflow-y: auto;
+}
+
+/* Use this on pages where you NEVER want scroll */
+body.no-scroll {
+  overflow: hidden;
 }
 
 /* HEADER */
@@ -204,6 +210,7 @@ body {
   justify-content: center;
   align-items: center;
 }
+
 .index-grid {
   max-width: 1500px !important;
   width: 90%;
