@@ -1,46 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Domino’s Menu</title>
-
-  <!-- ⭐ WEBSITE ICON (FAVICON) ⭐ -->
-  <link rel="icon" type="image/png" href="guy.png">
-
-  <link rel="stylesheet" href="style.css">
-
-  <!-- REMOVE SCROLL ONLY ON THIS PAGE -->
-  <style>
-    body {
-      overflow: hidden;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <title>Domino's Menu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="home-page">
 
-  <div class="header-container">
-    <div class="header-title">Domino’s Menu</div>
+  <div class="page-shell">
+    <header class="hero-header">
+      <img src="guy.png" alt="Domino's" class="hero-logo" />
+      <h1>Domino's Menu</h1>
+    </header>
+
+    <main class="home-main">
+      <div class="menu-grid home-grid">
+        <a href="pizza.html" class="menu-card card-blue">Pizza</a>
+        <a href="pasta.html" class="menu-card card-red">Pasta</a>
+        <a href="breadsides.html" class="menu-card card-blue">Bread Sides</a>
+        <a href="sandwiches.html" class="menu-card card-red">Sandwiches</a>
+        <a href="chicken.html" class="menu-card card-blue">Chicken</a>
+        <a href="dips.html" class="menu-card card-red">Dips</a>
+        <a href="desserts.html" class="menu-card card-blue">Desserts</a>
+      </div>
+    </main>
   </div>
-
-  <main class="app-center" style="padding-top:20px;">
-
-    <!-- CLEAN, CONSISTENT GRID FOR INDEX ONLY -->
-    <div class="menu-grid index-grid">
-
-      <a href="pizzas.html" class="menu-card card-blue">Pizza</a>
-      <a href="pasta.html" class="menu-card card-red">Pasta</a>
-      <a href="breadsides.html" class="menu-card card-blue">Bread Sides</a>
-      <a href="sandwiches.html" class="menu-card card-red">Sandwiches</a>
-      <a href="chicken.html" class="menu-card card-blue">Chicken</a>
-      <a href="desserts.html" class="menu-card card-red">Desserts</a>
-      <a href="loadedtots.html" class="menu-card card-blue">Loaded Tots</a>
-      <a href="dough.html" class="menu-card card-blue">Dough Stretch/Prep</a>
-
-    </div>
-  </main>
-
-  <!-- Small mascot -->
-  <img src="guy.png" class="mascot">
 
 </body>
 </html>
