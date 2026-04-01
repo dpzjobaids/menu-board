@@ -1,46 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Domino’s Menu</title>
-
-  <!-- ⭐ WEBSITE ICON (FAVICON) ⭐ -->
-  <link rel="icon" type="image/png" href="guy.png">
-
-  <link rel="stylesheet" href="style.css">
-
-  <!-- REMOVE SCROLL ONLY ON THIS PAGE -->
-  <style>
-    body {
-      overflow: hidden;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
   <div class="header-container">
+    <img src="guy.png" alt="Domino's logo" class="index-logo" />
     <div class="header-title">Domino’s Menu</div>
   </div>
 
-  <main class="app-center" style="padding-top:20px;">
-
-    <!-- CLEAN, CONSISTENT GRID FOR INDEX ONLY -->
+  <main class="app-center">
     <div class="menu-grid index-grid">
-
-      <a href="pizzas.html" class="menu-card card-blue">Pizza</a>
+      <a href="pizza.html" class="menu-card card-blue">Pizza</a>
       <a href="pasta.html" class="menu-card card-red">Pasta</a>
       <a href="breadsides.html" class="menu-card card-blue">Bread Sides</a>
       <a href="sandwiches.html" class="menu-card card-red">Sandwiches</a>
       <a href="chicken.html" class="menu-card card-blue">Chicken</a>
-      <a href="desserts.html" class="menu-card card-red">Desserts</a>
-      <a href="loadedtots.html" class="menu-card card-blue">Loaded Tots</a>
-      <a href="dough.html" class="menu-card card-blue">Dough Stretch/Prep</a>
-
+      <a href="dips.html" class="menu-card card-red">Dips</a>
+      <a href="desserts.html" class="menu-card card-blue">Desserts</a>
     </div>
   </main>
 
-  <!-- Small mascot -->
-  <img src="guy.png" class="mascot">
+  <div class="scroll-indicator" id="scrollIndicator">
+    <div class="scroll-indicator-arrow"></div>
+  </div>
+
+  <script>
+    (function () {
+      const indicator = document.getElementById("scrollIndicator");
+
+      function updateScrollIndicator() {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const viewportHeight = window.innerHeight;
+        const fullHeight = document.documentElement.scrollHeight;
+
+        if (fullHeight > viewportHeight + 20 && scrollTop < fullHeight - viewportHeight - 20) {
+          indicator.classList.add("visible");
+        } else {
+          indicator.classList.remove("visible");
+        }
+      }
+
+      window.addEventListener("load", updateScrollIndicator);
+      window.addEventListener("resize", updateScrollIndicator);
+      window.addEventListener("scroll", updateScrollIndicator);
+    })();
+  </script>
 
 </body>
 </html>
