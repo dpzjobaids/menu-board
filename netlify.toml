@@ -1,5 +1,0 @@
-[[redirects]]
-  from = "/*"
-  to = "/.netlify/identity/login"
-  status = 401
-  force = true
