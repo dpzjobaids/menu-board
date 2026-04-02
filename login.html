@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login – Domino's JobAids</title>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #0c2340;
+  color: white;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-box {
+  background: #c8102e;
+  padding: 40px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+button {
+  font-size: 20px;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="login-box">
+  <h1>Domino's JobAids</h1>
+  <p>Authorized users only</p>
+  <button onclick="netlifyIdentity.open()">Login</button>
+</div>
+
+<script>
+if (window.netlifyIdentity) {
+  netlifyIdentity.on("login", user => {
+    window.location.href = "/";
+  });
+}
+</script>
+
+</body>
+</html>
