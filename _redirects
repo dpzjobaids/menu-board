@@ -1,5 +1,5 @@
-/login /login.html 200
+/login      /login.html 200
 /login.html /login.html 200
 
-/* /login.html 401
-/* /index.html 200 Role=authorized
+/*          /:splat     200!  Role=authorized
+/*          /login      401!
