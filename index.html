@@ -1,54 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Domino’s Menu</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Domino's JobAids</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <div class="header-container">
-    <img src="guy.png" alt="Domino's logo" class="index-logo" />
-    <div class="header-title">Domino’s Menu</div>
+    <img src="guy.png" alt="Domino's mascot" class="index-logo">
+    <div class="header-title">Domino's JobAids</div>
   </div>
 
   <main class="app-center">
     <div class="menu-grid index-grid">
-      <a href="pizza.html" class="menu-card card-blue">Pizza</a>
+      <a href="pizza.html" class="menu-card card-red">Pizza</a>
       <a href="pasta.html" class="menu-card card-red">Pasta</a>
-      <a href="breadsides.html" class="menu-card card-blue">Bread Sides</a>
+      <a href="breadsides.html" class="menu-card card-red">Bread Sides</a>
       <a href="sandwiches.html" class="menu-card card-red">Sandwiches</a>
-      <a href="chicken.html" class="menu-card card-blue">Chicken</a>
-      <a href="desserts.html" class="menu-card card-blue">Desserts</a>
+      <a href="chicken.html" class="menu-card card-red">Chicken</a>
+      <a href="desserts.html" class="menu-card card-red">Desserts</a>
     </div>
   </main>
-
-  <div class="scroll-indicator" id="scrollIndicator">
-    <div class="scroll-indicator-arrow"></div>
-  </div>
-
-  <script>
-    (function () {
-      const indicator = document.getElementById("scrollIndicator");
-
-      function updateScrollIndicator() {
-        const scrollTop = window.scrollY || document.documentElement.scrollTop;
-        const viewportHeight = window.innerHeight;
-        const fullHeight = document.documentElement.scrollHeight;
-
-        if (fullHeight > viewportHeight + 20 && scrollTop < fullHeight - viewportHeight - 20) {
-          indicator.classList.add("visible");
-        } else {
-          indicator.classList.remove("visible");
-        }
-      }
-
-      window.addEventListener("load", updateScrollIndicator);
-      window.addEventListener("resize", updateScrollIndicator);
-      window.addEventListener("scroll", updateScrollIndicator);
-    })();
-  </script>
 
 </body>
 </html>
