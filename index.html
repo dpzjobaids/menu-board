@@ -5,9 +5,40 @@
   <title>Domino's JobAids</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+  <script>
+    document.documentElement.style.visibility = "hidden";
+
+    netlifyIdentity.init();
+
+    function goToLogin() {
+      window.location.replace("/login.html");
+    }
+
+    function showPage() {
+      document.documentElement.style.visibility = "visible";
+    }
+
+    netlifyIdentity.on("init", function(user) {
+      if (!user) {
+        goToLogin();
+        return;
+      }
+
+      showPage();
+    });
+
+    netlifyIdentity.on("login", function() {
+      window.location.replace("/index.html");
+    });
+
+    netlifyIdentity.on("logout", function() {
+      goToLogin();
+    });
+  </script>
 </head>
 <body>
-
   <div class="header-container">
     <img src="guy.png" alt="Domino's mascot" class="index-logo">
     <div class="header-title">Domino's JobAids</div>
@@ -23,6 +54,5 @@
       <a href="desserts.html" class="menu-card card-red">Desserts</a>
     </div>
   </main>
-
 </body>
 </html>
