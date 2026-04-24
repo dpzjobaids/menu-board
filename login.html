@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login | Domino's JobAids</title>
+
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
   <style>
@@ -76,31 +77,26 @@
   </div>
 
   <script>
+    function goToMenu() {
+      window.location.replace("/index.html");
+    }
+
+    function checkLoginAndRedirect() {
+      if (window.netlifyIdentity && netlifyIdentity.currentUser()) {
+        goToMenu();
+      }
+    }
+
     window.addEventListener("load", function () {
       if (!window.netlifyIdentity) {
         alert("Netlify Identity failed to load.");
         return;
       }
 
-      netlifyIdentity.init();
-
-      document.getElementById("loginBtn").addEventListener("click", function () {
-        const user = netlifyIdentity.currentUser();
-
-        if (user) {
-          window.location.href = "/index.html";
-        } else {
-          netlifyIdentity.open("login");
-        }
-      });
-
-      netlifyIdentity.on("login", function () {
-        window.location.href = "/index.html";
-      });
-
       netlifyIdentity.on("init", function (user) {
         if (user) {
-          window.location.href = "/index.html";
+          goToMenu();
+          return;
         }
 
         if (
@@ -111,6 +107,26 @@
           netlifyIdentity.open();
         }
       });
+
+      netlifyIdentity.on("login", function () {
+        goToMenu();
+      });
+
+      netlifyIdentity.on("close", function () {
+        setTimeout(checkLoginAndRedirect, 300);
+      });
+
+      netlifyIdentity.init();
+
+      document.getElementById("loginBtn").addEventListener("click", function () {
+        if (netlifyIdentity.currentUser()) {
+          goToMenu();
+        } else {
+          netlifyIdentity.open("login");
+        }
+      });
+
+      setInterval(checkLoginAndRedirect, 1000);
     });
   </script>
 
