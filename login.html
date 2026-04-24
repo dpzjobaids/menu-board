@@ -30,21 +30,23 @@
       border-radius: 18px;
       text-align: center;
       box-shadow: 0 20px 45px rgba(0,0,0,0.35);
+      position: relative;
+      z-index: 10;
     }
 
-    .login-box h1 {
+    h1 {
       font-size: 36px;
       color: #003366;
       margin: 0 0 12px;
     }
 
-    .login-box p {
+    p {
       font-size: 18px;
       color: #444;
       margin: 0 0 26px;
     }
 
-    .login-button {
+    button {
       width: 100%;
       padding: 16px;
       font-size: 22px;
@@ -55,6 +57,14 @@
       border-radius: 12px;
       cursor: pointer;
     }
+
+    button:hover {
+      background: #9f1c25;
+    }
+
+    #netlify-identity-widget {
+      z-index: 999999 !important;
+    }
   </style>
 </head>
 
@@ -63,53 +73,55 @@
   <div class="login-box">
     <h1>Domino's JobAids</h1>
     <p>Please log in to continue.</p>
-
-    <button class="login-button" type="button" onclick="netlifyIdentity.open()">
-      Login
-    </button>
+    <button type="button" id="loginBtn">Login</button>
   </div>
 
   <script>
+    function removeStuckIdentityFrames() {
+      document.querySelectorAll('iframe#netlify-identity-widget').forEach(function(frame) {
+        frame.remove();
+      });
+    }
+
     window.addEventListener("load", function () {
       if (!window.netlifyIdentity) {
         alert("Netlify Identity failed to load.");
         return;
       }
 
-      netlifyIdentity.on("init", function (user) {
-        if (
-          window.location.hash.includes("invite_token") ||
-          window.location.hash.includes("recovery_token") ||
-          window.location.hash.includes("confirmation_token")
-        ) {
-          netlifyIdentity.open();
-        }
+      const hasToken =
+        window.location.hash.includes("invite_token") ||
+        window.location.hash.includes("recovery_token") ||
+        window.location.hash.includes("confirmation_token");
 
-        if (user) {
-          const roles = user.app_metadata && user.app_metadata.roles
-            ? user.app_metadata.roles
-            : [];
+      if (!hasToken) {
+        removeStuckIdentityFrames();
+      }
 
-          if (roles.includes("authorized")) {
-            window.location.href = "/index.html";
-          }
-        }
+      document.getElementById("loginBtn").addEventListener("click", function () {
+        removeStuckIdentityFrames();
+        netlifyIdentity.open("login");
       });
 
+      if (hasToken) {
+        setTimeout(function () {
+          netlifyIdentity.open();
+        }, 500);
+      }
+
       netlifyIdentity.on("login", function (user) {
-        const roles = user.app_metadata && user.app_metadata.roles
-          ? user.app_metadata.roles
-          : [];
+        const roles =
+          user.app_metadata && user.app_metadata.roles
+            ? user.app_metadata.roles
+            : [];
 
         if (roles.includes("authorized")) {
           window.location.href = "/index.html";
         } else {
-          alert("Login successful, but this account is not authorized yet.");
+          alert("Login worked, but this account is not authorized yet.");
           netlifyIdentity.logout();
         }
       });
-
-      netlifyIdentity.init();
     });
   </script>
 
