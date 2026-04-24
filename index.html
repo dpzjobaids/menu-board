@@ -4,39 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Domino's JobAids</title>
-
   <link rel="stylesheet" href="/style.css" />
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 
 <body class="home-page">
-
-  <script>
-    if (window.location.hash) {
-      window.location.href = "/login.html" + window.location.hash;
-    }
-  </script>
-
-  <script>
-    window.addEventListener("load", function () {
-      if (!window.netlifyIdentity) {
-        window.location.href = "/login.html";
-        return;
-      }
-
-      window.netlifyIdentity.on("init", function (user) {
-        if (!user) {
-          window.location.href = "/login.html";
-        }
-      });
-
-      window.netlifyIdentity.on("logout", function () {
-        window.location.href = "/login.html";
-      });
-
-      window.netlifyIdentity.init();
-    });
-  </script>
 
   <header class="main-header">
     <img src="/mascot.png" alt="Domino's Mascot" class="mascot" />
@@ -56,6 +28,18 @@
     <a href="/desserts.html" class="menu-card">Desserts</a>
     <a href="/loadedtots.html" class="menu-card">Loaded Tots</a>
   </main>
+
+  <script>
+    window.addEventListener("load", function () {
+      if (!window.netlifyIdentity) return;
+
+      window.netlifyIdentity.on("logout", function () {
+        window.location.href = "/login.html";
+      });
+
+      window.netlifyIdentity.init();
+    });
+  </script>
 
 </body>
 </html>
