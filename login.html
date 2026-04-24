@@ -3,132 +3,144 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login | Domino's JobAids</title>
-
+  <title>Domino's JobAids Login</title>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
   <style>
-    * { box-sizing: border-box; }
-
-    html, body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(135deg, #003366, #111827);
+      padding: 0;
     }
 
     body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #101722;
+      color: #f2f4f7;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 24px;
     }
 
     .login-box {
-      width: 90%;
-      max-width: 430px;
-      background: white;
-      padding: 40px 34px;
-      border-radius: 18px;
-      text-align: center;
-      box-shadow: 0 20px 45px rgba(0,0,0,0.35);
+      width: 100%;
+      max-width: 460px;
+      background: #141c29;
+      border: 2px solid #232b3a;
+      border-radius: 24px;
+      padding: 38px 30px;
+      box-shadow: 0 18px 44px rgba(0,0,0,0.45);
     }
 
     h1 {
-      margin: 0 0 12px;
-      font-size: 36px;
-      color: #003366;
-      font-weight: 900;
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+      font-weight: 800;
     }
 
     p {
-      margin: 0 0 26px;
-      font-size: 18px;
-      color: #444;
+      font-size: 1.1rem;
+      margin-bottom: 26px;
+      opacity: 0.9;
     }
 
-    button {
+    button, a.continue-btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
       width: 100%;
-      padding: 16px;
-      font-size: 22px;
-      font-weight: 900;
-      color: white;
-      background: #b3202a;
+      min-height: 58px;
       border: none;
-      border-radius: 12px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #c71f34 0%, #b31c2f 100%);
+      color: white;
+      font-size: 1.25rem;
+      font-weight: 800;
+      text-decoration: none;
       cursor: pointer;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.35);
     }
 
-    button:hover {
-      background: #9d1c25;
+    .logout-btn {
+      margin-top: 14px;
+      background: #232b3a;
+      font-size: 1rem;
+      min-height: 44px;
     }
 
-    #netlify-identity-widget {
-      z-index: 999999 !important;
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 
 <body>
-
   <div class="login-box">
     <h1>Domino's JobAids</h1>
-    <p>Log in to continue.</p>
-    <button id="loginBtn" type="button">Login</button>
+    <p id="statusText">Please log in to continue.</p>
+
+    <button id="loginBtn">Login</button>
+
+    <a id="continueBtn" class="continue-btn hidden" href="index.html">
+      Continue to Menu
+    </a>
+
+    <button id="logoutBtn" class="logout-btn hidden">
+      Logout
+    </button>
   </div>
 
   <script>
-    function goToMenu() {
-      window.location.replace("/index.html");
+    netlifyIdentity.init();
+
+    const loginBtn = document.getElementById("loginBtn");
+    const continueBtn = document.getElementById("continueBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const statusText = document.getElementById("statusText");
+
+    function showLoggedOut() {
+      statusText.textContent = "Please log in to continue.";
+      loginBtn.classList.remove("hidden");
+      continueBtn.classList.add("hidden");
+      logoutBtn.classList.add("hidden");
     }
 
-    function checkLoginAndRedirect() {
-      if (window.netlifyIdentity && netlifyIdentity.currentUser()) {
-        goToMenu();
-      }
+    function showLoggedIn(user) {
+      statusText.textContent = "You are logged in.";
+      loginBtn.classList.add("hidden");
+      continueBtn.classList.remove("hidden");
+      logoutBtn.classList.remove("hidden");
     }
 
-    window.addEventListener("load", function () {
-      if (!window.netlifyIdentity) {
-        alert("Netlify Identity failed to load.");
-        return;
+    netlifyIdentity.on("init", user => {
+      if (user) {
+        showLoggedIn(user);
+      } else {
+        showLoggedOut();
       }
+    });
 
-      netlifyIdentity.on("init", function (user) {
-        if (user) {
-          goToMenu();
-          return;
-        }
+    loginBtn.addEventListener("click", () => {
+      netlifyIdentity.open("login");
+    });
 
-        if (
-          window.location.hash.includes("invite_token") ||
-          window.location.hash.includes("confirmation_token") ||
-          window.location.hash.includes("recovery_token")
-        ) {
-          netlifyIdentity.open();
-        }
-      });
+    logoutBtn.addEventListener("click", () => {
+      netlifyIdentity.logout();
+    });
 
-      netlifyIdentity.on("login", function () {
-        goToMenu();
-      });
+    netlifyIdentity.on("login", user => {
+      netlifyIdentity.close();
+      showLoggedIn(user);
+      window.location.href = "index.html";
+    });
 
-      netlifyIdentity.on("close", function () {
-        setTimeout(checkLoginAndRedirect, 300);
-      });
-
-      netlifyIdentity.init();
-
-      document.getElementById("loginBtn").addEventListener("click", function () {
-        if (netlifyIdentity.currentUser()) {
-          goToMenu();
-        } else {
-          netlifyIdentity.open("login");
-        }
-      });
-
-      setInterval(checkLoginAndRedirect, 1000);
+    netlifyIdentity.on("logout", () => {
+      showLoggedOut();
     });
   </script>
-
 </body>
 </html>
