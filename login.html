@@ -1,64 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>Login - Domino's JobAids</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login</title>
+
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
   <style>
     body {
       margin: 0;
-      min-height: 100vh;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #f4f6f8;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
     }
+
     .login-box {
-      text-align: center;
       background: white;
-      padding: 40px 30px;
+      padding: 35px;
       border-radius: 14px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-      width: min(90vw, 420px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.18);
+      text-align: center;
     }
-    h1 {
-      margin-top: 0;
-      margin-bottom: 12px;
+
+    .login-box h1 {
+      margin-bottom: 20px;
+      color: #003366;
     }
-    p {
-      margin-bottom: 24px;
-      color: #555;
-    }
-    button {
-      background: #c62828;
+
+    .login-btn {
+      background: #b3202a;
       color: white;
       border: none;
-      padding: 14px 22px;
-      font-size: 18px;
+      padding: 14px 28px;
+      font-size: 20px;
+      font-weight: bold;
       border-radius: 10px;
       cursor: pointer;
     }
   </style>
 </head>
+
 <body>
+
   <div class="login-box">
     <h1>Domino's JobAids</h1>
-    <p>Please log in to continue.</p>
-    <button id="loginBtn">Log In</button>
+    <button class="login-btn" onclick="netlifyIdentity.open()">Login</button>
   </div>
 
   <script>
-    netlifyIdentity.init();
-
-    document.getElementById("loginBtn").addEventListener("click", function() {
-      netlifyIdentity.open("login");
-    });
-
-    netlifyIdentity.on("login", function() {
-      window.location.replace("/index.html");
-    });
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("login", function() {
+        window.location.href = "/index.html";
+      });
+    }
   </script>
+
 </body>
 </html>
