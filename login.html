@@ -12,10 +12,14 @@
       box-sizing: border-box;
     }
 
+    html,
     body {
       margin: 0;
       min-height: 100vh;
       font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
       background: linear-gradient(135deg, #003366, #111827);
       display: flex;
       align-items: center;
@@ -25,32 +29,33 @@
     .login-box {
       width: 90%;
       max-width: 430px;
-      background: white;
-      padding: 38px 32px;
+      background: #ffffff;
+      padding: 40px 34px;
       border-radius: 18px;
       text-align: center;
-      box-shadow: 0 20px 45px rgba(0,0,0,0.35);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
       position: relative;
-      z-index: 10;
+      z-index: 2;
     }
 
-    h1 {
+    .login-box h1 {
+      margin: 0 0 12px;
       font-size: 36px;
       color: #003366;
-      margin: 0 0 12px;
+      font-weight: 900;
     }
 
-    p {
+    .login-box p {
+      margin: 0 0 26px;
       font-size: 18px;
       color: #444;
-      margin: 0 0 26px;
     }
 
-    button {
+    .login-button {
       width: 100%;
       padding: 16px;
       font-size: 22px;
-      font-weight: bold;
+      font-weight: 900;
       color: white;
       background: #b3202a;
       border: none;
@@ -58,8 +63,8 @@
       cursor: pointer;
     }
 
-    button:hover {
-      background: #9f1c25;
+    .login-button:hover {
+      background: #9d1c25;
     }
 
     #netlify-identity-widget {
@@ -73,54 +78,47 @@
   <div class="login-box">
     <h1>Domino's JobAids</h1>
     <p>Please log in to continue.</p>
-    <button type="button" id="loginBtn">Login</button>
+    <button class="login-button" type="button" id="loginButton">Login</button>
   </div>
 
   <script>
-    function removeStuckIdentityFrames() {
-      document.querySelectorAll('iframe#netlify-identity-widget').forEach(function(frame) {
-        frame.remove();
-      });
+    function openIdentityWidget() {
+      if (!window.netlifyIdentity) {
+        alert("Netlify Identity did not load. Check your internet connection or Netlify Identity settings.");
+        return;
+      }
+
+      window.netlifyIdentity.open();
     }
 
     window.addEventListener("load", function () {
       if (!window.netlifyIdentity) {
-        alert("Netlify Identity failed to load.");
+        alert("Netlify Identity did not load.");
         return;
       }
 
-      const hasToken =
-        window.location.hash.includes("invite_token") ||
-        window.location.hash.includes("recovery_token") ||
-        window.location.hash.includes("confirmation_token");
+      window.netlifyIdentity.on("init", function (user) {
+        if (window.location.hash) {
+          window.netlifyIdentity.open();
+        }
 
-      if (!hasToken) {
-        removeStuckIdentityFrames();
-      }
-
-      document.getElementById("loginBtn").addEventListener("click", function () {
-        removeStuckIdentityFrames();
-        netlifyIdentity.open("login");
+        if (user) {
+          window.location.href = "/index.html";
+        }
       });
 
-      if (hasToken) {
-        setTimeout(function () {
-          netlifyIdentity.open();
-        }, 500);
-      }
+      window.netlifyIdentity.on("login", function () {
+        window.location.href = "/index.html";
+      });
 
-      netlifyIdentity.on("login", function (user) {
-        const roles =
-          user.app_metadata && user.app_metadata.roles
-            ? user.app_metadata.roles
-            : [];
+      window.netlifyIdentity.on("logout", function () {
+        window.location.href = "/login.html";
+      });
 
-        if (roles.includes("authorized")) {
-          window.location.href = "/index.html";
-        } else {
-          alert("Login worked, but this account is not authorized yet.");
-          netlifyIdentity.logout();
-        }
+      window.netlifyIdentity.init();
+
+      document.getElementById("loginButton").addEventListener("click", function () {
+        openIdentityWidget();
       });
     });
   </script>

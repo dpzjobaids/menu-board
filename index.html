@@ -5,59 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Domino's JobAids</title>
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="/style.css" />
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 
 <body class="home-page">
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    if (window.location.hash) {
+      window.location.href = "/login.html" + window.location.hash;
+    }
+  </script>
+
+  <script>
+    window.addEventListener("load", function () {
       if (!window.netlifyIdentity) {
         window.location.href = "/login.html";
         return;
       }
 
-      netlifyIdentity.on("init", function (user) {
+      window.netlifyIdentity.on("init", function (user) {
         if (!user) {
-          window.location.href = "/login.html";
-          return;
-        }
-
-        const roles = user.app_metadata && user.app_metadata.roles ? user.app_metadata.roles : [];
-
-        if (!roles.includes("authorized")) {
-          alert("Your account is not authorized yet.");
-          netlifyIdentity.logout();
           window.location.href = "/login.html";
         }
       });
 
-      netlifyIdentity.on("logout", function () {
+      window.netlifyIdentity.on("logout", function () {
         window.location.href = "/login.html";
       });
 
-      netlifyIdentity.init();
+      window.netlifyIdentity.init();
     });
   </script>
 
   <header class="main-header">
-    <img src="mascot.png" alt="Domino's Mascot" class="mascot" />
+    <img src="/mascot.png" alt="Domino's Mascot" class="mascot" />
     <h1>Domino's JobAids</h1>
 
-    <button class="logout-button" onclick="netlifyIdentity.logout()">
+    <button class="logout-button" type="button" onclick="netlifyIdentity.logout()">
       Logout
     </button>
   </header>
 
   <main class="card-grid">
-    <a href="pizza.html" class="menu-card">Pizza</a>
-    <a href="pasta.html" class="menu-card">Pasta</a>
-    <a href="breadsides.html" class="menu-card">Bread Sides</a>
-    <a href="sandwiches.html" class="menu-card">Sandwiches</a>
-    <a href="chicken.html" class="menu-card">Chicken</a>
-    <a href="desserts.html" class="menu-card">Desserts</a>
-    <a href="loadedtots.html" class="menu-card">Loaded Tots</a>
+    <a href="/pizza.html" class="menu-card">Pizza</a>
+    <a href="/pasta.html" class="menu-card">Pasta</a>
+    <a href="/breadsides.html" class="menu-card">Bread Sides</a>
+    <a href="/sandwiches.html" class="menu-card">Sandwiches</a>
+    <a href="/chicken.html" class="menu-card">Chicken</a>
+    <a href="/desserts.html" class="menu-card">Desserts</a>
+    <a href="/loadedtots.html" class="menu-card">Loaded Tots</a>
   </main>
 
 </body>
