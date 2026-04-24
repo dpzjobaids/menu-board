@@ -17,10 +17,10 @@
       margin: 0;
       min-height: 100vh;
       font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #003366, #111827);
     }
 
     body {
-      background: linear-gradient(135deg, #003366, #111827);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -29,23 +29,21 @@
     .login-box {
       width: 90%;
       max-width: 430px;
-      background: #ffffff;
+      background: white;
       padding: 40px 34px;
       border-radius: 18px;
       text-align: center;
       box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
-      position: relative;
-      z-index: 2;
     }
 
-    .login-box h1 {
+    h1 {
       margin: 0 0 12px;
       font-size: 36px;
       color: #003366;
       font-weight: 900;
     }
 
-    .login-box p {
+    p {
       margin: 0 0 26px;
       font-size: 18px;
       color: #444;
@@ -82,24 +80,56 @@
   </div>
 
   <script>
-    function openIdentityWidget() {
-      if (!window.netlifyIdentity) {
-        alert("Netlify Identity did not load. Check your internet connection or Netlify Identity settings.");
-        return;
-      }
+    function clearBadIdentityFrame() {
+      const frame = document.getElementById("netlify-identity-widget");
 
-      window.netlifyIdentity.open();
+      if (frame) {
+        const hash = window.location.hash || "";
+
+        if (
+          !hash.includes("invite_token") &&
+          !hash.includes("confirmation_token") &&
+          !hash.includes("recovery_token")
+        ) {
+          frame.remove();
+        }
+      }
     }
 
-    window.addEventListener("load", function () {
+    function openLogin() {
+      clearBadIdentityFrame();
+
       if (!window.netlifyIdentity) {
         alert("Netlify Identity did not load.");
         return;
       }
 
+      window.netlifyIdentity.open("login");
+    }
+
+    window.addEventListener("load", function () {
+      const loginButton = document.getElementById("loginButton");
+
+      loginButton.addEventListener("click", function () {
+        openLogin();
+      });
+
+      if (!window.netlifyIdentity) {
+        alert("Netlify Identity did not load.");
+        return;
+      }
+
+      const hash = window.location.hash || "";
+
       window.netlifyIdentity.on("init", function (user) {
-        if (window.location.hash) {
-          window.netlifyIdentity.open();
+        if (
+          hash.includes("invite_token") ||
+          hash.includes("confirmation_token") ||
+          hash.includes("recovery_token")
+        ) {
+          setTimeout(function () {
+            window.netlifyIdentity.open();
+          }, 300);
         }
 
         if (user) {
@@ -116,10 +146,6 @@
       });
 
       window.netlifyIdentity.init();
-
-      document.getElementById("loginButton").addEventListener("click", function () {
-        openIdentityWidget();
-      });
     });
   </script>
 
