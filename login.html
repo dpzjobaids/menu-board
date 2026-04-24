@@ -51,6 +51,7 @@
     button {
       width: 100%;
       padding: 16px;
+      margin-top: 10px;
       font-size: 22px;
       font-weight: 900;
       color: white;
@@ -64,6 +65,14 @@
       background: #9d1c25;
     }
 
+    .secondary {
+      background: #003366;
+    }
+
+    .secondary:hover {
+      background: #00264d;
+    }
+
     #netlify-identity-widget {
       z-index: 999999 !important;
     }
@@ -75,31 +84,29 @@
   <div class="login-box">
     <h1>Domino's JobAids</h1>
     <p>Log in to continue.</p>
+
     <button id="loginBtn" type="button">Login</button>
+    <button id="continueBtn" class="secondary" type="button">Continue to Menu</button>
   </div>
 
   <script>
+    function goToMenu() {
+      window.location.href = "/index.html";
+    }
+
     window.addEventListener("load", function () {
       if (!window.netlifyIdentity) {
         alert("Netlify Identity failed to load.");
         return;
       }
 
-      netlifyIdentity.init();
-
-      document.getElementById("loginBtn").addEventListener("click", function () {
-        netlifyIdentity.open("login");
-      });
-
       netlifyIdentity.on("login", function () {
-        setTimeout(function () {
-          window.location.replace("/index.html");
-        }, 800);
+        goToMenu();
       });
 
       netlifyIdentity.on("init", function (user) {
         if (user) {
-          window.location.replace("/index.html");
+          goToMenu();
         }
 
         if (
@@ -109,6 +116,22 @@
         ) {
           netlifyIdentity.open();
         }
+      });
+
+      netlifyIdentity.init();
+
+      document.getElementById("loginBtn").addEventListener("click", function () {
+        var user = netlifyIdentity.currentUser();
+
+        if (user) {
+          goToMenu();
+        } else {
+          netlifyIdentity.open("login");
+        }
+      });
+
+      document.getElementById("continueBtn").addEventListener("click", function () {
+        goToMenu();
       });
     });
   </script>
