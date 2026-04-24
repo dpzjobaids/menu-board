@@ -12,8 +12,7 @@
       box-sizing: border-box;
     }
 
-    html,
-    body {
+    html, body {
       margin: 0;
       min-height: 100vh;
       font-family: Arial, Helvetica, sans-serif;
@@ -49,7 +48,7 @@
       color: #444;
     }
 
-    .login-button {
+    button {
       width: 100%;
       padding: 16px;
       font-size: 22px;
@@ -61,7 +60,7 @@
       cursor: pointer;
     }
 
-    .login-button:hover {
+    button:hover {
       background: #9d1c25;
     }
 
@@ -75,77 +74,42 @@
 
   <div class="login-box">
     <h1>Domino's JobAids</h1>
-    <p>Please log in to continue.</p>
-    <button class="login-button" type="button" id="loginButton">Login</button>
+    <p>Log in to continue.</p>
+    <button id="loginBtn" type="button">Login</button>
   </div>
 
   <script>
-    function clearBadIdentityFrame() {
-      const frame = document.getElementById("netlify-identity-widget");
-
-      if (frame) {
-        const hash = window.location.hash || "";
-
-        if (
-          !hash.includes("invite_token") &&
-          !hash.includes("confirmation_token") &&
-          !hash.includes("recovery_token")
-        ) {
-          frame.remove();
-        }
-      }
-    }
-
-    function openLogin() {
-      clearBadIdentityFrame();
-
-      if (!window.netlifyIdentity) {
-        alert("Netlify Identity did not load.");
-        return;
-      }
-
-      window.netlifyIdentity.open("login");
-    }
-
     window.addEventListener("load", function () {
-      const loginButton = document.getElementById("loginButton");
-
-      loginButton.addEventListener("click", function () {
-        openLogin();
-      });
-
       if (!window.netlifyIdentity) {
-        alert("Netlify Identity did not load.");
+        alert("Netlify Identity failed to load.");
         return;
       }
 
-      const hash = window.location.hash || "";
+      netlifyIdentity.init();
 
-      window.netlifyIdentity.on("init", function (user) {
-        if (
-          hash.includes("invite_token") ||
-          hash.includes("confirmation_token") ||
-          hash.includes("recovery_token")
-        ) {
-          setTimeout(function () {
-            window.netlifyIdentity.open();
-          }, 300);
-        }
+      document.getElementById("loginBtn").addEventListener("click", function () {
+        netlifyIdentity.open("login");
+      });
 
+      netlifyIdentity.on("login", function () {
+        setTimeout(function () {
+          window.location.replace("/index.html");
+        }, 800);
+      });
+
+      netlifyIdentity.on("init", function (user) {
         if (user) {
-          window.location.href = "/index.html";
+          window.location.replace("/index.html");
+        }
+
+        if (
+          window.location.hash.includes("invite_token") ||
+          window.location.hash.includes("confirmation_token") ||
+          window.location.hash.includes("recovery_token")
+        ) {
+          netlifyIdentity.open();
         }
       });
-
-      window.netlifyIdentity.on("login", function () {
-        window.location.href = "/index.html";
-      });
-
-      window.netlifyIdentity.on("logout", function () {
-        window.location.href = "/login.html";
-      });
-
-      window.netlifyIdentity.init();
     });
   </script>
 

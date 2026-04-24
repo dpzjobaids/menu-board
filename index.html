@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Domino's JobAids</title>
+
   <link rel="stylesheet" href="/style.css" />
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
@@ -14,7 +15,7 @@
     <img src="/mascot.png" alt="Domino's Mascot" class="mascot" />
     <h1>Domino's JobAids</h1>
 
-    <button class="logout-button" type="button" onclick="netlifyIdentity.logout()">
+    <button class="logout-button" id="logoutBtn" type="button">
       Logout
     </button>
   </header>
@@ -31,13 +32,19 @@
 
   <script>
     window.addEventListener("load", function () {
-      if (!window.netlifyIdentity) return;
+      if (!window.netlifyIdentity) {
+        return;
+      }
 
-      window.netlifyIdentity.on("logout", function () {
-        window.location.href = "/login.html";
+      netlifyIdentity.init();
+
+      document.getElementById("logoutBtn").addEventListener("click", function () {
+        netlifyIdentity.logout();
       });
 
-      window.netlifyIdentity.init();
+      netlifyIdentity.on("logout", function () {
+        window.location.replace("/login.html");
+      });
     });
   </script>
 
