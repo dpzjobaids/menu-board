@@ -4,13 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login | Domino's JobAids</title>
-
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html, body {
       margin: 0;
@@ -32,7 +29,7 @@
       padding: 40px 34px;
       border-radius: 18px;
       text-align: center;
-      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 20px 45px rgba(0,0,0,0.35);
     }
 
     h1 {
@@ -51,7 +48,6 @@
     button {
       width: 100%;
       padding: 16px;
-      margin-top: 10px;
       font-size: 22px;
       font-weight: 900;
       color: white;
@@ -65,14 +61,6 @@
       background: #9d1c25;
     }
 
-    .secondary {
-      background: #003366;
-    }
-
-    .secondary:hover {
-      background: #00264d;
-    }
-
     #netlify-identity-widget {
       z-index: 999999 !important;
     }
@@ -84,29 +72,35 @@
   <div class="login-box">
     <h1>Domino's JobAids</h1>
     <p>Log in to continue.</p>
-
     <button id="loginBtn" type="button">Login</button>
-    <button id="continueBtn" class="secondary" type="button">Continue to Menu</button>
   </div>
 
   <script>
-    function goToMenu() {
-      window.location.href = "/index.html";
-    }
-
     window.addEventListener("load", function () {
       if (!window.netlifyIdentity) {
         alert("Netlify Identity failed to load.");
         return;
       }
 
+      netlifyIdentity.init();
+
+      document.getElementById("loginBtn").addEventListener("click", function () {
+        const user = netlifyIdentity.currentUser();
+
+        if (user) {
+          window.location.href = "/index.html";
+        } else {
+          netlifyIdentity.open("login");
+        }
+      });
+
       netlifyIdentity.on("login", function () {
-        goToMenu();
+        window.location.href = "/index.html";
       });
 
       netlifyIdentity.on("init", function (user) {
         if (user) {
-          goToMenu();
+          window.location.href = "/index.html";
         }
 
         if (
@@ -116,22 +110,6 @@
         ) {
           netlifyIdentity.open();
         }
-      });
-
-      netlifyIdentity.init();
-
-      document.getElementById("loginBtn").addEventListener("click", function () {
-        var user = netlifyIdentity.currentUser();
-
-        if (user) {
-          goToMenu();
-        } else {
-          netlifyIdentity.open("login");
-        }
-      });
-
-      document.getElementById("continueBtn").addEventListener("click", function () {
-        goToMenu();
       });
     });
   </script>
