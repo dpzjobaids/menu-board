@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login | Domino's JobAids</title>
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="/style.css" />
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 
@@ -15,30 +15,45 @@
     <h1>Domino's JobAids</h1>
     <p>Please log in to continue.</p>
 
-    <button class="login-button" onclick="netlifyIdentity.open()">
+    <button class="login-button" type="button" onclick="netlifyIdentity.open()">
       Login
     </button>
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      if (!window.netlifyIdentity) return;
+    window.addEventListener("load", function () {
+      if (!window.netlifyIdentity) {
+        alert("Netlify Identity failed to load.");
+        return;
+      }
 
       netlifyIdentity.on("init", function (user) {
-        if (window.location.hash) {
+        if (window.location.hash.includes("invite_token") || 
+            window.location.hash.includes("recovery_token") || 
+            window.location.hash.includes("confirmation_token")) {
           netlifyIdentity.open();
         }
 
-        if (user && user.app_metadata && user.app_metadata.roles && user.app_metadata.roles.includes("authorized")) {
-          window.location.href = "/index.html";
+        if (user) {
+          const roles = user.app_metadata && user.app_metadata.roles
+            ? user.app_metadata.roles
+            : [];
+
+          if (roles.includes("authorized")) {
+            window.location.href = "/index.html";
+          }
         }
       });
 
       netlifyIdentity.on("login", function (user) {
-        if (user.app_metadata && user.app_metadata.roles && user.app_metadata.roles.includes("authorized")) {
+        const roles = user.app_metadata && user.app_metadata.roles
+          ? user.app_metadata.roles
+          : [];
+
+        if (roles.includes("authorized")) {
           window.location.href = "/index.html";
         } else {
-          alert("Your account is not authorized yet.");
+          alert("Login successful, but this account is not authorized yet.");
           netlifyIdentity.logout();
         }
       });
